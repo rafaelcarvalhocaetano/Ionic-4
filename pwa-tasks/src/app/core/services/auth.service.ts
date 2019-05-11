@@ -26,13 +26,13 @@ export class AuthService {
    }
 
   // identification of type access with email
-  public authentication({ isSingIn, provider, user }: AuthOptions): Promise<auth.UserCredential> {
+  public authentication({ isSignIn, provider, user }: AuthOptions): Promise<auth.UserCredential> {
     let operation: Promise<auth.UserCredential>;
 
     if (provider !== AuthProvider.Email) {
       operation = this.singInWIthPopup(provider);
     } else {
-      operation = isSingIn ? this.singInWithEmail(user) : this.singUpWithEmail(user);
+      operation = isSignIn ? this.singInWithEmail(user) : this.singUpWithEmail(user);
     }
     return operation;
   }

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { AuthProvider } from 'src/app/core/services/Auth';
 
 @Component({
   selector: 'app-login',
@@ -8,17 +10,20 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 })
 export class LoginPage implements OnInit {
 
+  public authProviders = AuthProvider;
+
   form: FormGroup;
   config = {
     isSingin: true,
     action: 'Login',
     actionChange: 'Create Account'
   };
-   
+
   private nameControl = new FormControl(null, [Validators.required, Validators.minLength(3)]);
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -29,11 +34,22 @@ export class LoginPage implements OnInit {
     this.form = this.fb.group({
       email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required, Validators.minLength(6)]]
-    })
+    });
   }
 
-  public sendLogin() {
-    console.log(' valor ', this.form.value);
+  async onSubmit(provider: AuthProvider): Promise<void> {
+    try {
+      const credentials = await this.authService.authentication({
+        isSignIn: this.config.isSingin,
+        user: this.form.value,
+        provider
+      });
+      console.log(' credentials ', credentials);
+      console.log(' Redirect ..... ');
+
+    } catch (e) {
+      console.log(' erros ', e);
+    }
   }
 
   get email(): FormControl {

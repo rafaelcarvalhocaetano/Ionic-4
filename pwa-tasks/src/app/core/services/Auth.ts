@@ -13,7 +13,7 @@ export enum AuthProvider {
 }
 
 export interface AuthOptions {
-  isSingIn: boolean;
+  isSignIn: boolean;
   provider: AuthProvider;
   user: User;
 }
