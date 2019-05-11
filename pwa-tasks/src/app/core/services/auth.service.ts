@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Observable } from 'rxjs';
+
 import { auth } from 'firebase';
+import { AuthProvider, User } from './Auth';
 
 @Injectable({
   providedIn: 'root'
@@ -13,29 +14,29 @@ export class AuthService {
   ) { }
 
 
-  private singInWithEmail({ email, password }): Promise<auth.UserCredential> {
+  private singInWithEmail({ email, password }: User): Promise<auth.UserCredential> {
     return this.fireAuth.auth.signInWithEmailAndPassword(email, password);
   }
 
   // method of authentication with firebase Promise
-  private singUpWithEmail({email, password, name}): Promise<auth.UserCredential> {
+  private singUpWithEmail({email, password, name}: User): Promise<auth.UserCredential> {
     return this.fireAuth.auth.createUserWithEmailAndPassword(email, password)
     .then(credenciais =>
       credenciais.user.updateProfile({ displayName: name, photoURL: null}).then(() => credenciais));
   }
 
   // method that will identify the type of authentication
-  private singInWIthPopup(provider: string): Promise<auth.UserCredential> {
+  private singInWIthPopup(provider: AuthProvider): Promise<auth.UserCredential> {
     let singInProvider = null;
 
     switch (provider) {
-      case 'facebook':
+      case AuthProvider.Facebook:
         singInProvider = new auth.FacebookAuthProvider();
         break;
-      case 'google':
+      case AuthProvider.Google:
         singInProvider = new auth.GoogleAuthProvider();
         break;
-      case 'github':
+      case AuthProvider.Github:
         singInProvider = new auth.GithubAuthProvider();
         break;
     }
