@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 
 import { auth } from 'firebase';
-import { AuthProvider, User } from './Auth';
+import { AuthProvider, User, AuthOptions } from './Auth';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,19 @@ export class AuthService {
     private fireAuth: AngularFireAuth
   ) { }
 
+  // identification of type access with email
+  public authentication({ isSingIn, provider, user }: AuthOptions): Promise<auth.UserCredential> {
+    let operation: Promise<auth.UserCredential>;
 
+    if (provider !== AuthProvider.Email) {
+      operation = this.singInWIthPopup(provider);
+    } else {
+      operation = isSingIn ? this.singInWithEmail(user) : this.singUpWithEmail(user);
+    }
+    return operation;
+  }
+
+  // authentication with email
   private singInWithEmail({ email, password }: User): Promise<auth.UserCredential> {
     return this.fireAuth.auth.signInWithEmailAndPassword(email, password);
   }
