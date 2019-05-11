@@ -49,7 +49,6 @@ export class LoginPage implements OnInit {
       });
       console.log(' credentials ', credentials);
       console.log(' Redirect ..... ');
-
     } catch (e) {
       console.log(' erros ', e);
       this.overlayService.toast({
