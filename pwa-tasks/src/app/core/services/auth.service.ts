@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Observable } from 'rxjs';
 
 import { auth } from 'firebase';
 import { AuthProvider, User, AuthOptions } from './Auth';
@@ -9,9 +10,13 @@ import { AuthProvider, User, AuthOptions } from './Auth';
 })
 export class AuthService {
 
+  authState$: Observable<firebase.User>;
+
   constructor(
     private fireAuth: AngularFireAuth
-  ) { }
+  ) {
+    this.authState$ = this.fireAuth.authState;
+   }
 
   // identification of type access with email
   public authentication({ isSingIn, provider, user }: AuthOptions): Promise<auth.UserCredential> {
