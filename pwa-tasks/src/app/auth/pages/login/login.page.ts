@@ -13,7 +13,8 @@ export class LoginPage implements OnInit {
     isSingin: true,
     action: 'Login',
     actionChange: 'Create Account'
-  }
+  };
+   
   private nameControl = new FormControl(null, [Validators.required, Validators.minLength(3)]);
 
   constructor(
