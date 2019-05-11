@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { AuthProvider } from 'src/app/core/services/Auth';
+import { OverlayService } from 'src/app/core/services/overlay.service';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,8 @@ export class LoginPage implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private overlayService: OverlayService
   ) { }
 
   ngOnInit() {
@@ -38,6 +40,7 @@ export class LoginPage implements OnInit {
   }
 
   async onSubmit(provider: AuthProvider): Promise<void> {
+    const loading = await this.overlayService.loading();
     try {
       const credentials = await this.authService.authentication({
         isSignIn: this.config.isSingin,
@@ -49,6 +52,11 @@ export class LoginPage implements OnInit {
 
     } catch (e) {
       console.log(' erros ', e);
+      this.overlayService.toast({
+        message: e.message
+      });
+    } finally {
+      loading.dismiss();
     }
   }
 
