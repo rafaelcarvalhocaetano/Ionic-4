@@ -40,7 +40,6 @@ export class AuthService {
   // method that will identify the type of authentication
   private singInWIthPopup(provider: AuthProvider): Promise<auth.UserCredential> {
     let singInProvider = null;
-
     switch (provider) {
       case AuthProvider.Facebook:
         singInProvider = new auth.FacebookAuthProvider();
@@ -52,8 +51,12 @@ export class AuthService {
         singInProvider = new auth.GithubAuthProvider();
         break;
     }
-
     return this.fireAuth.auth.signInWithPopup(singInProvider);
+  }
+
+  // method of logout
+  public logout(): Promise<void> {
+    return this.fireAuth.auth.signOut();
   }
 
 }
