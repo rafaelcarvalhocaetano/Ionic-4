@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', loadChildren: './auth/auth.module#AuthModule' },
-  { path: 'task-list', loadChildren: './task/pages/task-list/task-list.module#TaskListPageModule' },
+  { path: 'task', loadChildren: './task/task.module#TaskModule', canLoad: [AuthGuard] },
 ];
 
 @NgModule({
