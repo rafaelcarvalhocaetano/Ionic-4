@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 
 import { TaskListPage } from './task-list.page';
+import { ComponentsModule } from '../../components/components.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 const routes: Routes = [
@@ -15,7 +15,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     SharedModule,
-    CommonModule,
+    ComponentsModule,
     RouterModule.forChild(routes)
   ],
   declarations: [TaskListPage]
