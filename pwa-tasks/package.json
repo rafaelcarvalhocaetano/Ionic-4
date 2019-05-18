@@ -9,7 +9,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "deploy:firebase": "cross-env npm run build -- --prod && npx firebase deploy"
   },
   "private": true,
   "dependencies": {
@@ -26,6 +27,7 @@
     "@ionic-native/status-bar": "^5.0.0",
     "@ionic/angular": "^4.1.0",
     "core-js": "^2.5.4",
+    "cross-env": "^5.2.0",
     "firebase": "^5.9.4",
     "rxjs": "~6.5.1",
     "tslib": "^1.9.0",
@@ -45,6 +47,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~10.14.2",
     "codelyzer": "~4.5.0",
+    "firebase-tools": "^6.10.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.1.0",
