@@ -1,5 +1,12 @@
 <ion-header>
   <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-toggle>
+        <ion-button>
+          <ion-icon name="menu" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
     <ion-title>task-list</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,7 +16,10 @@
   <ion-list *ngIf="(tasks$ | async) as tasks">
     <!-- <app-task-list *ngFor="let item of tk" [task]="item"></app-task-list> -->
    <ng-container *ngIf="tasks.length > 0; else noTasks">
-      <app-task-item *ngFor="let task of tasks" [task]="task"></app-task-item>
+      <app-task-item *ngFor="let task of tasks" [task]="task" 
+        (update)="onUpdate($event)"
+        (delete)="onDelete($event)"
+        (done)="onDone($event)"></app-task-item>
    </ng-container>
    <ng-template #noTasks>
      <ion-item lines="none">No Task yet ...</ion-item>

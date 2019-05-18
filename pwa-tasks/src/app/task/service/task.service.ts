@@ -3,15 +3,17 @@ import { Firestore } from 'src/app/core/class/Firestore';
 import { Task } from '../models/task.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { firestore } from 'firebase';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TaskService extends Firestore<Task>{
+export class TaskService extends Firestore<Task> {
 
   constructor(
     private authService: AuthService,
-    db: AngularFirestore) {
+    db: AngularFirestore
+    ) {
     super(db);
     this.init();
   }
@@ -23,6 +25,7 @@ export class TaskService extends Firestore<Task>{
         this.setCollection(`/users/${x.uid}/tasks`);
         return;
       }
+
       this.setCollection(null);
     });
   }
